@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Security-Policy" content="style-src 'unsafe-inline'; script-src 'unsafe-inline'; report-uri $CSP_REPORT_URI;">
+<style>
+.target {
+    background-color: blue;
+}
+</style>
+</head>
+<body class="target">
+<script>
+document.write(document.styleSheets.length > 0 ? 'PASS' : 'FAIL');
+</script>
+</body>
+</html>

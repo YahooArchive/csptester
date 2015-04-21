@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include partials/template/head.ejs %>
+  </head>
+
+  <body>
+  <% include partials/template/header.ejs %>
+
+    <p><center id="msgbox">This is a curated subset of WebKit CSP tests provided for testing various CSP features. You may find the complete set of tests in WebKit <a href="https://trac.webkit.org/browser#trunk/LayoutTests/http/tests/security/contentSecurityPolicy/" target="_blank" rel="noreferrer">Repository</a></center></p>
+    <div id="container">
+    <table class="pure-table pure-table-bordered">
+      <tbody>
+      <% for(var i=0; i < tests.length; i++) { %>
+         <tr> 
+           <td><%= i+1 %></td>
+           <td><%= tests[i] %></td>
+           <td><a href="/<%= tests[i] %>" target="_blank">View</a></td>
+           <td><a href="http://<%= hostip %>:<%= hostport %>/webkit-test/<%= tests[i] %>" target="_blank">Run</a></td>
+
+         </tr>
+      <% } %>
+      </tbody>
+    </table>
+    <br><br>
+    </div>
+  </body>
+</html>
+

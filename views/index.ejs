@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><% include partials/template/head.ejs %></head>
+  <body>
+
+    <% include partials/template/header.ejs %>
+    <div id="container">
+    <form class="pure-form pure-form-stacked" action="test" method="POST" target="_blank" enctype="multipart/form-data">
+    <fieldset>
+        <legend></legend>
+        <label for="cspheader">CSP header</label>
+        <% if ((userinput != undefined) && (userinput.cspheader)) { %>
+            <textarea id= "cspheader" name="cspheader" rows="4" placeholder="Paste CSP HTTP header here (omit header name and report-uri field) Ex. default-src 'self';"><%= userinput.cspheader %></textarea>
+        <% } else { %>
+            <textarea id= "cspheader" name="cspheader" rows="4" placeholder="Paste CSP HTTP header here (omit header name and report-uri field) Ex. default-src 'self';"></textarea>
+        <% } %>
+
+
+        <label for="reportonly" title="Disable policy enforcement">
+        <% if ((userinput != undefined) && (userinput.hasOwnProperty('reportonly'))) { %>
+            <input id="reportonly" type="checkbox" name="reportonly" checked> Report only
+        <% } else { %>
+            <input id="reportonly" type="checkbox" name="reportonly"> Report only
+        <% } %>
+        </label>
+
+        <br>
+        <label for="htmlcode">HTML code</label>
+        <% if ((userinput != undefined) && (userinput.htmlcode)) { %>
+            <textarea id="htmlcode" name="htmlcode" placeholder="Paste html code here"><%= userinput.htmlcode %></textarea>
+        <% } else { %>
+            <textarea id="htmlcode" name="htmlcode" placeholder="Paste html code here"></textarea>
+        <% } %>
+
+        <label for="windowtop" title="Render HTML code on top-level window, not on iframe (default)">
+        <% if ((userinput != undefined) && (userinput.hasOwnProperty('windowtop'))) { %>
+            <input id="windowtop" type="checkbox" name="windowtop" checked> Render on <span id="htmlcode">window.top</span>
+        <% } else { %>
+            <input id="windowtop" type="checkbox" name="windowtop"> Render on <span id="htmlcode">window.top</span>
+        <% } %>
+        </label>
+
+        <br>
+        <br>
+        <button type="submit" class="pure-button pure-button-primary">Submit</button>
+    </fieldset>
+    </form>
+    </div>
+  </body>
+</html>
+

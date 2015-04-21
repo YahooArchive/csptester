@@ -1,0 +1,7 @@
+<h1><%= message %></h1>
+<% if (error.hasOwnProperty('status')) { %>
+  <h2><%= error.status %></h2>
+<% } %>
+<% if (error.hasOwnProperty('stack')) { %>
+<pre><%= error.stack %></pre>
+<% } %>

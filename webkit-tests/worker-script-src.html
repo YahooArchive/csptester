@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Security-Policy" content="script-src 'unsafe-inline'; report-uri $CSP_REPORT_URI;"/>
+</head>
+<body>
+<script>
+// NOTE: Use render 'window.top' option in csptester before submit
+try {
+    var foo = new Worker('/resources/alert-fail.js');
+} catch (e) {
+   alert(e);
+}
+</script>
+</body>
+</html>

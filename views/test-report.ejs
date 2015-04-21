@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include partials/template/head.ejs %>
+    <link rel="stylesheet" href="/stylesheets/jquery/1.11.2/themes/smoothness/jquery-ui.css">
+    <script src="/javascripts/jquery/jquery-1.11.2.min.js"></script>
+    <script src="/javascripts/jquery/jquery-ui-1.11.2.min.js"></script>
+    <script src="/javascripts/testscript.js"></script>
+  </head>
+
+  <body>
+  <% include partials/template/header.ejs %>
+
+  <div id="container">
+      <table id="bottomtable" class="pure-table pure-table-bordered">
+        <thead>
+          <tr>
+            <th></th>
+            <th>document-uri</th>
+            <th>referrer</th>
+            <th>violated-directive</th>
+            <th>blocked-uri</th>
+          </tr>
+        </thead>
+
+        <tbody id="cspreportdiv"></tbody>
+      </table>
+      <br>
+      <img id="loading" src="/images/spinner.gif">
+      <div id="noviolationmsg"></div>
+  </div>
+
+  <div id="testid" class="hiddenelement"><%= testid %></div>
+
+
+  </body>
+</html>
+

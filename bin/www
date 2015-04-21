@@ -1,0 +1,27 @@
+#!/usr/bin/env node
+var debug = require('debug')('csptester');
+var app = require('../index');
+var config = require('../config.js');
+var https = require('https');
+var fs = require('fs');
+
+var port = process.env.PORT || config.port;
+
+if ((config.tls === 1) || (config.tls === 2)) {
+  var options = {
+    key: fs.readFileSync(config.tlsKey),
+    cert: fs.readFileSync(config.tlsCert),
+  };
+
+  var server = https.createServer(options, app).listen(config.tlsPort, function(){
+    console.log('CSP Tester HTTPS server listening on port ' + server.address().port);
+  });
+
+} 
+
+if ((config.tls === 0) || (config.tls === 2)) {
+  var server = app.listen(port, function() {
+    console.log('CSP Tester HTTP server listening on port ' + server.address().port);
+  });
+}
+

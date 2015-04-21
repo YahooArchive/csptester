@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'unsafe-inline'; report-uri $CSP_REPORT_URI;">
+</head>
+<pre>
+<script>
+
+var id = setInterval("alert('FAIL')", 0);
+if (id != 0)
+    document.write('FAIL: Return value for string (should be 0): ' + id);
+
+var id = setInterval(function() {
+  clearInterval(id);
+  alert('PASS');
+}, 0);
+if (id == 0)
+    document.write('FAIL: Return value for function (should not be 0): ' + id);
+</script>
+</pre>
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel='stylesheet' href='/stylesheets/pure/0.5.0/pure-min.css' />
+  </head>
+  <body>
+    <div id="report-link"> 
+      <center> 
+      <h2>
+        CSP Tester
+        <a  id="link" href="http://<%= hostip %>:<%= hostport %>/report2/<%= testid %>" target="_blank">View violations</a>
+      </h2>
+      </center>
+    </div>
+    <br/>
+    <br/>
+    <center>
+    <% if (sharelink === true) { %>
+      <% if (showlink === true) { %>
+        <form class="pure-form">
+        <input id="share-url" type="text" class="pure-input-1-2" readonly>
+        </form> 
+        <br>
+      <% } else {  %>
+        <a  id="link" href="http://<%= hostname %>/<%= testid %>" target="_blank">View test code</a><br><br>
+      <% } %>
+      This shareable link expires on: <span id="expirytime"><%= linkexpiry %></span><br>
+    <% } else { %>
+      <div title="Generate a shareable link in the URL; copy and share or try it on a different browser">
+        <button id="share-link" type="submit" class="pure-button pure-button-primary">Get shareable link</button>
+      </div>
+      <% var ts = new Date().getTime(); %>
+      <div id="share-uri" class="hiddenelement">/test-share/<%= testid %>?ts=<%= ts %>&sl=1</div>
+    <% }  %>
+    </center>
+    <div id="report-uri" class="hiddenelement">http://<%= hostip %>:<%= hostport %>/report2/<%= testid %></div>
+    <div id="test-uri" class="hiddenelement">http://<%= hostip %>:<%= hostport %>/test/<%= testid %></div>
+    <script src="/javascripts/test-window.js"></script>
+  </body>
+    <script src="/javascripts/test-share-script.js"></script>
+</html>
+

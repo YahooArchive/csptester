@@ -1,0 +1,124 @@
+body {
+  padding: 0px;
+  font-size: small;
+}
+
+a {
+  color: #00B7FF;
+}
+
+/* navbar CSS */
+.pure-menu a {
+  color: #FFFFFF;
+}
+
+.pure-menu li a:hover, .pure-menu li a:focus {
+  background: #6f5499;
+}
+
+.pure-menu .pure-menu-open {
+  background: #6f5499;
+}
+
+#pageheader {
+  background-color: #6f5499;
+  color: #FFFFFF;
+  padding-right: 8px;
+  padding-left: 10px;
+  margin-bottom: 8px;
+}
+
+#title {
+  font-size: large;
+  margin-top: 6px;
+  margin-bottom: 4px;
+}
+
+#desc {
+  font-size: small;
+  color: #cdbfe3;
+  margin-bottom: 4px;
+}
+
+#navbar {
+  text-align: right;
+}
+
+#webkit-csp-tests {
+  color: #fff1aa;
+}
+
+/* navbar END */
+
+#msgbox {
+  border-style: solid;
+  border-width: 1px;
+  margin-right: 15%;
+  margin-left: 15%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: #FFFEEE;
+  /*background-color: #F0EFDB;*/
+}
+
+textarea {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+
+  width: 100%;
+}
+
+#htmlcode {
+  height: 30em;
+  font-family: Consolas;
+}
+
+#cspheader {
+  font-family: Consolas;
+}
+
+html, body {
+  height: 90%;
+}
+
+#container {
+  padding: 10px;
+  height: 100%;
+}
+
+#topdiv {
+  height: 60%;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#bottomdiv {
+  height: 40%;
+  width: 100%;
+  margin-top: 10px;
+  text-align: left;
+  /* ADD THE OVERFLOW */
+  overflow-x: hidden;
+  overflow-y: auto;
+
+}
+
+#topframe {
+  height: 100%;
+  width:100%;
+}
+
+#bottomtable {
+  width:100%;
+}
+
+.hiddenelement {
+  display: none;
+}
+
+img#loading {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

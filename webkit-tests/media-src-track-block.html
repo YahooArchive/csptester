@@ -1,0 +1,23 @@
+<html>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="media-src 'none'; report-uri $CSP_REPORT_URI;">
+    <script>
+        function loaded() {
+            alert("FAIL");
+        }
+        function errored() {
+            alert("PASS");
+        }
+        function start() {
+            var track = document.querySelector('track');
+            track.track.mode = "hidden";
+            track.setAttribute('src', '/resources/track.vtt');
+        }
+    </script>
+</head>
+<body onload="start()">
+    <video>
+        <track kind="captions" onload="loaded()" onerror="errored()">
+    </video>
+</body>
+</html>

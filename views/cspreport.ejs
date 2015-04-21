@@ -1,0 +1,16 @@
+<% for(var i=0; i < records.length; i++) { %>
+<%   var report = JSON.parse(records[i]); var j = i+1;%>
+<%   if (i%2 === 0) { %>
+  <tr>
+<%   }  else { %>
+  <tr class="pure-table-odd">
+<%   } %>
+
+    <td><%= j %></td>
+    <td><%= report['csp-report']['document-uri'] %></td>
+    <td><%= report['csp-report']['referrer'] %></td>
+    <td><%= report['csp-report']['violated-directive'] %></td>
+    <td><%= report['csp-report']['blocked-uri'] %></td>
+  </tr>
+<% } %>
+

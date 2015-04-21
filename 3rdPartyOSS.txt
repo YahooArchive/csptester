@@ -1,0 +1,55 @@
+Open source softwares:
+----------------------
+purecss.io (http://purecss.io/)
+  license: https://github.com/yahoo/pure-site/blob/master/LICENSE.md
+
+jquery (http://jquery.com/)
+  license: https://github.com/jquery/jquery/blob/master/LICENSE.txt
+
+nodejs ( http://nodejs.org/)
+  license: https://github.com/joyent/node/blob/master/LICENSE
+
+redis (http://redis.io)
+  license: https://github.com/antirez/redis/blob/unstable/COPYING
+
+NodeJs npm open source packages:
+--------------------------------
+body-parser
+  license: https://github.com/expressjs/body-parser/blob/master/LICENSE
+
+cookie-parser
+  license: https://github.com/expressjs/cookie-parser/blob/master/LICENSE
+
+debug
+  license: https://github.com/visionmedia/debug (MIT)
+
+ejs
+  license: https://github.com/tj/ejs (MIT) 
+
+express
+  license: https://github.com/strongloop/express/blob/master/LICENSE
+
+express-busboy
+  license: https://github.com/yahoo/express-busboy/blob/master/LICENSE
+
+morgan
+  license: https://github.com/expressjs/morgan/blob/master/LICENSE
+
+randomstring
+  license: https://github.com/klughammer/node-randomstring/blob/master/LICENSE
+
+redis
+  license: https://github.com/mranney/node_redis (MIT)
+
+serve-favicon
+  licenses: https://github.com/expressjs/serve-favicon/blob/master/LICENSE
+
+ua-parser
+  license: https://github.com/tobie/ua-parser/blob/master/LICENSE.txt
+
+
+The application also contains modified version of CSP test scripts from:
+https://trac.webkit.org/browser#trunk/LayoutTests/http/tests/security/contentSecurityPolicy/
+webkit
+  licenses: https://www.webkit.org/coding/bsd-license.html & https://www.webkit.org/coding/lgpl-license.html
+

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'; report-uri $CSP_REPORT_URI;"/>
+</head>
+<body>
+<script>
+// NOTE: Use render 'window.top' option in csptester before submit
+try {
+    var worker = new Worker('/resources/worker-set-timeout.js');
+    worker.onmessage = function (event) {
+        alert(event.data);
+    };
+} catch (e) {
+    alert(e);
+}
+</script>
+</body>
+</html>
