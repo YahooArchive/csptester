@@ -1,4 +1,3 @@
-//
 // Copyright (c) 2015, Yahoo Inc.
 // Copyrights licensed under the New BSD License. See the
 // accompanying LICENSE.txt file for terms.
@@ -25,8 +24,10 @@ var cachestore = redis.createClient(config.redisPort, config.redisHost, {});
 var csp_hdr = "default-src 'self'; ";
 // webkit-tests path
 var webkit_tests = '../webkit-tests';
+// webkit-tests2 path (CSP1.1 or level 2)
+var webkit_tests2 = '../webkit-tests/1.1';
 // filter html files
-var pattern = /^[\w, -]{1,32}\.html$/;
+var pattern = /^[\w, -]{1,48}\.html$/;
 
 //
 /* GET home page. */
@@ -55,69 +56,136 @@ router.get('/', function(req, res) {
   res.render('index', { title: title, userinput: undefined });
 });
 
-/* GET home page with preloaded inputs. */
-router.get('/webkit-tests', function(req, res) {
-
-  fs.readdir(path.join(__dirname, webkit_tests), function(err, files) {
-    if (err) { 
-      console.log('Read failed: ' + err.message);
-      res.set('content-security-policy', csp_hdr);
-      res.render('index', { title: title, userinput: undefined });
-      return;
-    }
-
-    var tests = [];
-    var i = 0;
-    files.forEach(function(filename) {
-      //console.log('file: ' + filename);
-      if (pattern.test(filename)) {
-        tests[i++] = filename;
-      }
-
-    });
-
-    res.set('content-security-policy', csp_hdr);
-    res.render('webkit-tests', { title: title, tests: tests, hostname: hostname,
-                         hostport: req.socket.localPort,
-                         hostip: req.socket.localAddress });
-     
-  });
+/* Healthcheck URL */
+router.get('/status.html', function(req, res) {
+  res.set('content-security-policy', csp_hdr);
+  res.set('content-type', 'text/plain');
+  res.set('connection', 'close');
+  res.status(200).send('OK');
 });
 
 /* GET home page with preloaded inputs. */
-router.get('/:id', function(req, res) {
-  var key = req.params.id;
-  res.set('content-security-policy', csp_hdr);
-
-  if ((key != undefined) && (key)) {
-    key = key.slice(0, keylen);
-    cachestore.get(key, function (err, result) {
-
-      if (err || !result) {
-        console.log(key + ' : key not found');
-      } else {
-        var j = JSON.parse(result);
-        res.render('index', { title: title, userinput: j });
+router.get('/webkit-tests', function(req, res) {
+  try {
+    fs.readdir(path.join(__dirname, webkit_tests), function(err, files) {
+      if (err) { 
+        console.log('Read failed: ' + err.message);
+        res.set('content-security-policy', csp_hdr);
+        res.render('index', { title: title, userinput: undefined });
+        return;
       }
-    });
 
-    var filename = req.params.id;
-    // a crude input filter
-    if (pattern.test(filename)) {
-      fs.readFile(path.join(__dirname, webkit_tests + '/' + filename), 'utf8', 
-                                                      function (error, data) {
-        if (error) {
-          res.render('index', { title: title, userinput: undefined });
-          return;
+      var tests = [];
+      var i = 0;
+      files.forEach(function(filename) {
+        //console.log('file: ' + filename);
+        if (pattern.test(filename)) {
+          tests[i++] = filename;
         }
 
-        var input = { 'cspheader' : '', 'htmlcode' : data };
-        res.render('index', { title: title, userinput: input });
       });
-    } 
 
-    //res.render('index', { title: title, userinput: undefined });
+      res.set('content-security-policy', csp_hdr);
+      res.render('webkit-tests', { title: title, tests: tests, hostname: hostname,
+                           hostport: req.socket.localPort,
+                           hostip: req.socket.localAddress, csp11: false });
+     
+    });
+  } catch (err) {
+    // handle the error safely
+    console.log(err);
+    res.status(400).send('Bad Request');
   }
+});
+
+/* GET preloaded CSP level 2 scripts (from Chrome) */
+router.get('/webkit-tests2', function(req, res) {
+
+  try {
+    fs.readdir(path.join(__dirname, webkit_tests2), function(err, files) {
+      if (err) {
+        console.log('Read failed: ' + err.message);
+        res.set('content-security-policy', csp_hdr);
+        res.render('index', { title: title, userinput: undefined });
+        return;
+      }
+
+      var tests = [];
+      var i = 0;
+      files.forEach(function(filename) {
+        //console.log('file: ' + filename);
+        if (pattern.test(filename)) {
+          tests[i++] = filename;
+        }
+      });
+
+      res.set('content-security-policy', csp_hdr);
+      res.render('webkit-tests', { title: title, tests: tests, hostname: hostname,
+                           hostport: req.socket.localPort,
+                           hostip: req.socket.localAddress, csp11: true });
+
+    });
+  } catch (err) {
+    // handle the error safely
+    console.log(err);
+    res.status(400).send('Bad Request');
+  }
+});
+
+
+/* GET home page with preloaded inputs. */
+router.get('/:id', function(req, res) {
+  try {
+    var key = req.params.id;
+    res.set('content-security-policy', csp_hdr);
+
+    if ((key != undefined) && (key)) {
+      key = key.slice(0, keylen);
+      cachestore.get(key, function (err, result) {
+
+        if (err || !result) {
+          console.log(key + ' : key not found');
+        } else {
+          var j = JSON.parse(result);
+          res.render('index', { title: title, userinput: j });
+        }
+      });
+
+      var filename = req.params.id;
+      // a crude input filter
+      if (pattern.test(filename)) {
+        fs.readFile(path.join(__dirname, webkit_tests + '/' + filename), 'utf8', 
+                                                      function (error, data) {
+          if (error) {
+            // lets check it in 1.1 dir
+            fs.readFile(path.join(__dirname, webkit_tests2 + '/' + filename), 'utf8',
+                                                      function (error, data) {
+              if (error) {
+                res.render('index', { title: title, userinput: undefined });
+                return;
+              }
+
+              var input = { 'cspheader' : '', 'htmlcode' : data };
+              res.render('index', { title: title, userinput: input });
+            });
+
+            return;
+          }
+
+          var input = { 'cspheader' : '', 'htmlcode' : data };
+          res.render('index', { title: title, userinput: input });
+        });
+
+      } 
+
+      //res.render('index', { title: title, userinput: undefined });
+    }
+  } catch (err) {
+    // handle the error safely
+    console.log(err);
+    res.status(400).send('Bad Request');
+  }
+
 });
 
 /* GET WebKit csp test page. */
@@ -128,6 +196,41 @@ router.get('/webkit-test/:id', function(req, res) {
     // a crude input filter
     if (pattern.test(filename)) {
       fs.readFile(path.join(__dirname, webkit_tests + '/' + filename), 'utf8',
+                                                      function (error, data) {
+        if (error) {
+          res.status(400).send('Bad Request');
+          return;
+        }
+
+        var input = { 'cspheader' : '', 'htmlcode' : data };
+        var key = randomstring.generate(keylen);
+        cachestore.setex(key, expiry, JSON.stringify(input), redis.print);
+
+        var csp_hdr2 = csp_hdr + ' frame-src http://' + req.socket.localAddress + ':' + req.socket.localPort + ';';
+        res.set('content-security-policy', csp_hdr2);
+        res.render('test', { title: title,
+                         testid: key,
+                         hostport: req.socket.localPort,
+                         hostip: req.socket.localAddress });
+
+      });
+    }
+
+  } catch (err) {
+    // handle the error safely
+    console.log(err);
+    res.status(400).send('Bad Request');
+  }
+});
+
+/* GET WebKit csp1.1 test page. */
+router.get('/webkit-test2/:id', function(req, res) {
+  try {
+
+    var filename = req.params.id;
+    // a crude input filter
+    if (pattern.test(filename)) {
+      fs.readFile(path.join(__dirname, webkit_tests2 + '/' + filename), 'utf8',
                                                       function (error, data) {
         if (error) {
           res.status(400).send('Bad Request');
@@ -353,5 +456,71 @@ router.get('/report2/:id', function(req, res) {
   }
 
 });
+
+/*-----------------------------------------*/
+/* CSP 1.1 testing - A dummy form endpoint */
+/*-----------------------------------------*/
+router.get('/test/csp11/form-target', function(req, res) {
+  try {
+    res.set('content-security-policy', csp_hdr);
+    res.status(200).send('Form submit OK');
+  } catch (err) {
+    // handle the error safely
+    console.log(err);
+    res.status(400).send('Bad Request');
+  }
+
+});
+
+router.post('/test/csp11/form-target', function(req, res) {
+  try {
+    res.set('content-security-policy', csp_hdr);
+    res.status(200).send('Form submit OK');
+  } catch (err) {
+    // handle the error safely
+    console.log(err);
+    res.status(400).send('Bad Request');
+  }
+
+});
+
+router.get('/test/csp11/redirect', function(req, res) {
+  try {
+    res.set('content-security-policy', csp_hdr);
+    res.redirect(302, 'http://example.com');
+  } catch (err) {
+    // handle the error safely
+    console.log(err);
+    res.status(400).send('Bad Request');
+  }
+
+});
+
+router.post('/test/csp11/redirect', function(req, res) {
+  try {
+    res.set('content-security-policy', csp_hdr);
+    res.redirect(302, 'http://example.com');
+  } catch (err) {
+    // handle the error safely
+    console.log(err);
+    res.status(400).send('Bad Request');
+  }
+
+});
+
+router.get('/test/csp11/mock-plugin', function(req, res) {
+  try {
+    res.set('Content-Type', 'application/x-webkit-test-netscape');
+    res.status(200).send('This is a mock plugin. It does pretty much nothing.');
+  } catch (err) {
+    // handle the error safely
+    console.log(err);
+    res.status(400).send('Bad Request');
+  }
+
+});
+/*-----------------------------------------*/
+/* CSP 1.1 testing - END                   */
+/*-----------------------------------------*/
 
 module.exports = router;

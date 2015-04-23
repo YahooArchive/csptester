@@ -7,8 +7,13 @@
   <body>
   <% include partials/template/header.ejs %>
 
-    <p><center id="msgbox">This is a curated subset of WebKit CSP tests provided for testing various CSP features. You may find the complete set of tests in WebKit <a href="https://trac.webkit.org/browser#trunk/LayoutTests/http/tests/security/contentSecurityPolicy/" target="_blank" rel="noreferrer">Repository</a></center></p>
+    <p><center id="msgbox">This is a curated subset of WebKit CSP tests provided for testing various CSP features. You may find the complete set of tests in <a href="https://trac.webkit.org/browser#trunk/LayoutTests/http/tests/security/contentSecurityPolicy/" target="_blank" rel="noreferrer">WebKit</a> and <a href="https://code.google.com/p/chromium/codesearch#chromium/src/third_party/WebKit/LayoutTests/http/tests/security/contentSecurityPolicy/1.1/&sq=package:chromium" target="_blank" rel="noreferrer">Chrome</a> repositories</center></p>
     <div id="container">
+    <% if (csp11 === true) { %>
+      <p> <a href="/webkit-tests">CSP 1.0 Tests</a></p>
+    <% } else { %>
+      <p> <a href="/webkit-tests2">CSP 1.1 (Level 2) Tests</a></p>
+    <% } %>
     <table class="pure-table pure-table-bordered">
       <tbody>
       <% for(var i=0; i < tests.length; i++) { %>
@@ -16,7 +21,11 @@
            <td><%= i+1 %></td>
            <td><%= tests[i] %></td>
            <td><a href="/<%= tests[i] %>" target="_blank">View</a></td>
-           <td><a href="http://<%= hostip %>:<%= hostport %>/webkit-test/<%= tests[i] %>" target="_blank">Run</a></td>
+           <% if (csp11 === true) { %>
+             <td><a href="http://<%= hostip %>:<%= hostport %>/webkit-test2/<%= tests[i] %>" target="_blank">Run</a></td>
+           <% } else { %>
+             <td><a href="http://<%= hostip %>:<%= hostport %>/webkit-test/<%= tests[i] %>" target="_blank">Run</a></td>
+           <% } %>
 
          </tr>
       <% } %>

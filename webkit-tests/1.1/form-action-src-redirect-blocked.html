@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Security-Policy" content="form-action 'self'; report-uri $CSP_REPORT_URI;">
+<script>
+   
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            document.getElementById('submit').click();
+        }, 0);
+    });
+  </script>
+</head>
+<body>
+    <form id="form1" action="/test/csp11/redirect" method="post">
+        <input type='text' name='fieldname' value='fieldvalue'>
+        <input type='submit' id='submit' value='submit'>
+    </form>
+
+    <p>Tests that blocking form redirect works correctly. If this test passes, you will see a console error, and will not see a page indicating a form was POSTed.</p>
+</body>
+</html>

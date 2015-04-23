@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Security-Policy" content="style-src 'self'; report-uri $CSP_REPORT_URI;">
+        <style nonce="noncynonce">
+            #test {
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <p id="test">This text should be black.</p>
+        <script>
+            var el = document.querySelector('#test');
+        </script>
+    </body>
+</html>

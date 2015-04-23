@@ -1,0 +1,13 @@
+<!DOCTYPE html>                                                                                                                                                                                
+<html>
+<head>
+<meta http-equiv="Content-Security-Policy" content="plugin-types application/x-invalid-type; report-uri $CSP_REPORT_URI;">
+</head>
+<body>
+    Given a `plugin-types` directive, plugins have to declare a type explicitly.
+    No declared type, no load. This test passes if there's a console message
+    above.
+    <object data="test/csp11/mock-plugin12"
+            log="FAIL!"></object>
+</body>
+</html>

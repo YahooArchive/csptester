@@ -8,7 +8,7 @@ A quick and easy way to test CSP behavior on modern browsers
  * Ability to render your HTML code on iframe and top-level window
  * Report-Only and enforce mode options. Try an `alert()` in your code to see report-only and enforce in action!
  * Shareable links - To share with other users or to repeat the test on a different browser
- * Preloaded with curated subset of WebKit CSP tests to test various CSP features
+ * Preloaded with curated subset of WebKit/Chrome tests (CSP level 1 & 2) to test various CSP features
 
 ## Using csptester
 
@@ -111,14 +111,15 @@ csptester provides two options to render HTML code; (1) iframe (2) top-level win
 ### WebKit CSP Tests
 csptester is preloaded with curated subset of WebKit CSP tests to test various CSP features. Not all WebKit tests are available now in csptester. These scripts cover most common CSP user cases and serve as an excellent learning resource. 
 
-All tests are adopted from WebKit source [repository](https://trac.webkit.org/browser#trunk/LayoutTests/http/tests/security/contentSecurityPolicy/)
+All tests are adopted from [WebKit](https://trac.webkit.org/browser#trunk/LayoutTests/http/tests/security/contentSecurityPolicy/) and [Chrome](https://code.google.com/p/chromium/codesearch#chromium/src/third_party/WebKit/LayoutTests/http/tests/security/contentSecurityPolicy/1.1/&sq=package:chromium) repositories
 
 ## Deploying csptester
 
  1. Clone or download [csptester](https://github.com/yahoo/csptester) from git
- 2. Install [redis](http://redis.io/)
- 3. Start redis: `% redis-server /usr/local/etc/redis.conf`
- 4. `% node ./bin/www` 
+ 2. Install npm packages: `% cd csptester && npm install`
+ 3. Install [redis](http://redis.io/)
+ 4. Start redis: `% redis-server /usr/local/etc/redis.conf`
+ 5. `% node ./bin/www` 
 
 For service management, use [forever](https://www.npmjs.com/package/forever) npm package
 
@@ -126,3 +127,6 @@ For service management, use [forever](https://www.npmjs.com/package/forever) npm
 
 Application settings such as TLS, redis connection, default port are defined in `config.js` file. 
 
+### Known Issues
+
+ 1. WebKit & Chrome CSP tests use HTML meta-tags to define policy. Since CSP meta-tag option is not implemented in Firefox, these tests may not work in Firefox. The workaroud is to take the CSP policy defined in the HTML meta-tag and put it in CSP header field.

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Security-Policy" content="form-action 'none'; report-uri $CSP_REPORT_URI;">
+<script>
+    
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            document.getElementById('submit').click();
+        }, 0);
+    });
+</script>
+</head>
+<body>
+    <form action='javascript:alert("FAIL!")' id='theform' method='post'>
+        <input type='text' name='fieldname' value='fieldvalue'>
+        <input type='submit' id='submit' value='submit'>
+    </form>
+
+    <p>Tests that blocking form actions works correctly. If this test passes, you will see a console error, and will not see a JavaScript alert.</p>
+</body>
+</html>
+
