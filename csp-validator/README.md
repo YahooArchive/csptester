@@ -5,7 +5,7 @@
 
 Using the script as part of the the build process helps the team to detect inclusion of non-whitelisted resources before the application deploys to production. For example, adding a third-party Javascript tag or adding a HTTP resource to an HTTPS page.
 
-NOTE: `csp-validator.js` is a independent tool with no dependency on `csptester`.
+NOTE: `csp-validator.js` is an independent tool with no dependency on `csptester`.
 ### Usage
 
 Prerequisite: <a href="http://phantomjs.org/" target="_blank">phantomjs</a> 
