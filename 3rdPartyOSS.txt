@@ -52,4 +52,6 @@ The application also contains modified version of CSP test scripts from:
 https://trac.webkit.org/browser#trunk/LayoutTests/http/tests/security/contentSecurityPolicy/
 webkit
   licenses: https://www.webkit.org/coding/bsd-license.html & https://www.webkit.org/coding/lgpl-license.html
-
+and
+https://code.google.com/p/chromium/codesearch#chromium/src/third_party/WebKit/LayoutTests/http/tests/security/contentSecurityPolicy/1.1/&sq=package:chromium
+license: https://code.google.com/p/chromium/codesearch#chromium/src/LICENSE&sq=package:chromium&q=license
