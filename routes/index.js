@@ -145,6 +145,8 @@ router.get('/:id', function(req, res) {
 
         if (err || !result) {
           console.log(key + ' : key not found');
+          res.status(400).send('<h2>Page not found. URL is expired</h2> <a href="/">Home</a>');
+          return;
         } else {
           var j = JSON.parse(result);
           res.render('index', { title: title, userinput: j });

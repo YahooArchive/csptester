@@ -2,6 +2,10 @@
 
 A quick and easy way to test CSP behavior on modern browsers
 
+`csptester` is a Node.js-based web app that can frame a user's HTML content and allow them to test CSP policies in a browser of their choice to see what fails/works. You may optionally even try XSS attacks against your code. There are tools like [http://caniuse.com/#search=csp](http://caniuse.com/#search=csp) that shows which browser versions support CSP, but it doesn't convey disparity in support between versions or browsers. And that's one reason `csptester` is helpful.
+
+Try it out: [csptester.io](http://csptester.io)
+
 **Features**
  * Test CSP on all modern browsers
  * CSP HTML meta tag support
@@ -9,6 +13,7 @@ A quick and easy way to test CSP behavior on modern browsers
  * Report-Only and enforce mode options. Try an `alert()` in your code to see report-only and enforce in action!
  * Shareable links - To share with other users or to repeat the test on a different browser
  * Preloaded with curated subset of WebKit/Chrome tests (CSP level 1 & 2) to test various CSP features
+ * Check 3rd party resources (eg. JavaScript) to find 4th party/recursive dependencies
 
 ## Using csptester
 
@@ -72,7 +77,7 @@ If we set  CSP header `default-src 'self'`, the above HTML code reports four vio
 Disable policy enforcement. This will render the page even with the violations. The number of CSP reports tend to increase with this option set. That is because a violated resource may embed other violated URIs - chain effect.
 
 ### CSP HTML meta tags
-csptester also supports testing CSP with HTML `meta` tag. `meta` tag is another way to set content security policy on a web page. To track violations with CSP meta tag on csptester tool, provide a URL variable called $CSP_REPORT_URI for `report-uri` field as shown below:
+`csptester` also supports testing CSP with HTML `meta` tag. `meta` tag is another way to set content security policy on a web page. To track violations with CSP meta tag on `csptester` tool, provide a URL variable called $CSP_REPORT_URI for `report-uri` field as shown below:
 
 ```html
 <meta http-equiv="content-security-policy" content="default-src none; report-uri $CSP_REPORT_URI;"/>
@@ -103,13 +108,14 @@ The policy is set in the HTML code using `meta` tag. This is equivalent to setti
 ```
 
 ### Render on window.top
-csptester provides two options to render HTML code; (1) iframe (2) top-level window. iframe is the default option. The second option opens two new windows (or tabs). The first window renders HTML code and the other one shows voilation reports. The second option is useful in the following cases:
+`csptester` provides two options to render HTML code; (1) iframe (2) top-level window. iframe is the default option. The second option opens two new windows (or tabs). The first window renders HTML code and the other one shows violation reports. The second option is useful in the following cases:
+ * Policy enforcement varies and the result wont be exactly same on iframe and top-level window.
  * If you copy paste a web page (eg yahoo mail page source), those web pages may have (javascript) checks to test the rendering window is an iframe or not, and may not even render on iframe.
  * Many browser plugins (adwares, malwares etc.) inject code only to top window pages. So we cannot detect such violations with iframe option.
- * Currently shareable links are supported only in this mode
+ * Shareable links are supported only in this mode
 
 ### WebKit CSP Tests
-csptester is preloaded with curated subset of WebKit CSP tests to test various CSP features. Not all WebKit tests are available now in csptester. These scripts cover most common CSP user cases and serve as an excellent learning resource. 
+`csptester` is preloaded with curated subset of WebKit CSP tests to test various CSP features. Not all WebKit tests are available now in csptester. These scripts cover most common CSP user cases and serve as an excellent learning resource.
 
 All tests are adopted from [WebKit](https://trac.webkit.org/browser#trunk/LayoutTests/http/tests/security/contentSecurityPolicy/) and [Chrome](https://code.google.com/p/chromium/codesearch#chromium/src/third_party/WebKit/LayoutTests/http/tests/security/contentSecurityPolicy/1.1/&sq=package:chromium) repositories
 
@@ -130,3 +136,7 @@ Application settings such as TLS, redis connection, default port are defined in 
 ### Known Issues
 
  1. WebKit & Chrome CSP tests use HTML meta-tags to define policy. Since CSP meta-tag option is not implemented in Firefox, these tests may not work in Firefox. The workaroud is to take the CSP policy defined in the HTML meta-tag and put it in CSP header field.
+ 2. If you are not seeing the desired behavior for CSP Level 2 tests with default option (iframe), try with enabling top-level window option.
+
+### [csp-validator.js](https://github.com/yahoo/csptester/blob/master/csp-validator/csp-validator.js)
+`csp-validator.js` is a separate phantomjs based command-line script to validate CSP policy for the given URL. You may use this script during the web application build process (integration testing phase) to validate CSP policy to make sure your web page complies with the defined policy. Click [csp-validator](https://github.com/yahoo/csptester/blob/master/csp-validator/README.md) to find more details.
