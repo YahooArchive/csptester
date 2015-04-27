@@ -132,7 +132,6 @@ router.get('/webkit-tests2', function(req, res) {
   }
 });
 
-
 /* GET home page with preloaded inputs. */
 router.get('/:id', function(req, res) {
   try {
@@ -144,43 +143,46 @@ router.get('/:id', function(req, res) {
       cachestore.get(key, function (err, result) {
 
         if (err || !result) {
-          console.log(key + ' : key not found');
-          res.status(400).send('<h2>Page not found. URL is expired</h2> <a href="/">Home</a>');
-          return;
-        } else {
-          var j = JSON.parse(result);
-          res.render('index', { title: title, userinput: j });
-        }
-      });
-
-      var filename = req.params.id;
-      // a crude input filter
-      if (pattern.test(filename)) {
-        fs.readFile(path.join(__dirname, webkit_tests + '/' + filename), 'utf8', 
-                                                      function (error, data) {
-          if (error) {
-            // lets check it in 1.1 dir
-            fs.readFile(path.join(__dirname, webkit_tests2 + '/' + filename), 'utf8',
-                                                      function (error, data) {
+          //  not cached; lets see if it is a file
+          console.log(key + ' : key not found aaaa');
+          var filename = req.params.id;
+          // a crude input filter
+          if (pattern.test(filename)) {
+            fs.readFile(path.join(__dirname, webkit_tests + '/' + filename), 'utf8', 
+                                                        function (error, data) {
               if (error) {
-                res.render('index', { title: title, userinput: undefined });
+                // lets check it in 1.1 dir
+                fs.readFile(path.join(__dirname, webkit_tests2 + '/' + filename), 'utf8',
+                                                        function (error, data) {
+                  if (error) {
+                    res.render('index', { title: title, userinput: undefined });
+                    return;
+                  }
+
+                  var input = { 'cspheader' : '', 'htmlcode' : data };
+                  res.render('index', { title: title, userinput: input });
+                  return;
+                });
+
+              } else {
+                var input = { 'cspheader' : '', 'htmlcode' : data };
+                res.render('index', { title: title, userinput: input });
                 return;
               }
-
-              var input = { 'cspheader' : '', 'htmlcode' : data };
-              res.render('index', { title: title, userinput: input });
             });
 
+          } else {
+            res.status(400).send('<h2>Page not found. URL is expired</h2> <a href="/">Home</a>');
             return;
           }
 
-          var input = { 'cspheader' : '', 'htmlcode' : data };
-          res.render('index', { title: title, userinput: input });
-        });
+        } else {
+          var j = JSON.parse(result);
+          res.render('index', { title: title, userinput: j });
+          return;
+        }
+      });
 
-      } 
-
-      //res.render('index', { title: title, userinput: undefined });
     }
   } catch (err) {
     // handle the error safely
