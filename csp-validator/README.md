@@ -11,9 +11,9 @@ NOTE: `csp-validator.js` is an independent tool with no dependency on `csptester
 Prerequisite: <a href="http://phantomjs.org/" target="_blank">phantomjs</a> 
 
 ```
-% bin/phantomjs csp-enforcer.js 
+% bin/phantomjs csp-validator.js 
 
-Usage: csp-enforcer.js [--quiet] <URL>
+Usage: csp-validator.js [--quiet] <URL>
 Returns:
  0 => SUCCESS - No violations
  1 => FAIL - System/parse/input error
