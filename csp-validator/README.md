@@ -29,7 +29,7 @@ Want to do a quick try?
 
 **Example**
 ```
-% bin/phantomjs csp-enforcer.js http://74.6.34.39/test/w1uCH63aAg6Gv3IE
+% bin/phantomjs csp-validator.js http://74.6.34.39/test/w1uCH63aAg6Gv3IE
 http://74.6.34.39/report/w1uCH63aAg6Gv3IE
 Request (#2): {"csp-report":{"document-uri":"http://74.6.34.39/test/w1uCH63aAg6Gv3IE","referrer":"","violated-directive":"default-src none","original-policy":"default-src none; report-uri /report/w1uCH63aAg6Gv3IE;","blocked-uri":"http://yui.yahooapis.com"}}
 http://74.6.34.39/report/w1uCH63aAg6Gv3IE
