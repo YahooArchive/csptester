@@ -85,6 +85,16 @@ html, body {
 #container {
   padding: 10px;
   height: 100%;
+  width: 100%;
+}
+
+#test-report-container {
+  padding: 10px;
+  height: 100%;
+  width: 100%;
+  /* ADD THE OVERFLOW */
+  overflow-x: auto;
+  overflow-y: auto;
 }
 
 #topdiv {
@@ -97,9 +107,10 @@ html, body {
   height: 40%;
   width: 100%;
   margin-top: 10px;
+  /* margin-right: 10px; */
   text-align: left;
   /* ADD THE OVERFLOW */
-  overflow-x: hidden;
+  overflow-x: auto;
   overflow-y: auto;
 
 }
