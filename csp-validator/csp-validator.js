@@ -72,9 +72,10 @@ page.onResourceRequested = function(requestData, networkRequest) {
         if (quiet == false) {
           console.log('Request (#' + requestData.id + '): ' + requestData.postData); 
         }
+        
+        violationCount++;
       }
 
-      violationCount++;
     }catch(e){
         //alert(e); //error in the above parsing; skip and continue
         
