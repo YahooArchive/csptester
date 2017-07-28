@@ -4,8 +4,6 @@ A quick and easy way to test CSP behavior on modern browsers
 
 `csptester` is a Node.js-based web app that can frame a user's HTML content and allow them to test CSP policies in a browser of their choice to see what fails/works. You may optionally even try XSS attacks against your code. There are tools like <a href="http://caniuse.com/#search=csp" target="_blank">http://caniuse.com/#search=csp</a> that shows which browser versions support CSP, but it doesn't convey disparity in support between versions or browsers. And that's one reason `csptester` is helpful.
 
-Try it out: <a href="http://csptester.io" target="_blank">csptester.io</a>
-
 **Features**
  * Test CSP on all modern browsers
  * CSP HTML meta tag support
