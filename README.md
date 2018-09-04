@@ -1,3 +1,5 @@
+**Note:** This library has known security vulnerabilities, use at your own risk!
+
 ## CSPTESTER
 
 A quick and easy way to test CSP behavior on modern browsers
